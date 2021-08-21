@@ -8,7 +8,7 @@ from rest_framework.generics import (
 from rest_framework.views import APIView
 from rest_framework import status as httpStatus
 from rest_framework.response import Response
-from django.contrib.auth import authenticate, login,logout
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import authentication
 
@@ -47,10 +47,16 @@ class RegisterView(CreateAPIView):
     model = User
     permission_classes = [AllowAny]
 
+
 class LogoutView(APIView):
     def post(self, request):
         logout(request)
-        return Response({"status":True,'message':"Successfully logged out"},status=httpStatus.HTTP_200_OK)
+        return Response(
+            {"status": True, "message": "Successfully logged out"},
+            status=httpStatus.HTTP_200_OK,
+        )
+
+
 class UserProfileView(RetrieveUpdateDestroyAPIView):
     serializer_class = UserProfileSerializer
 

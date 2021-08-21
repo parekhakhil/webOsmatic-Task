@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    'rest_framework',
-    'authapp',
+    "rest_framework",
+    "authapp",
+    "contactlist",
 ]
 
 MIDDLEWARE = [
@@ -73,12 +73,12 @@ TEMPLATES = [
 WSGI_APPLICATION = "interview_task.wsgi.application"
 
 REST_FRAMEWORK = {
-  'DEFAULT_AUTHENTICATION_CLASSES': (
-  'rest_framework.authentication.SessionAuthentication',
-  ),
-# 'DEFAULT_PERMISSION_CLASSES': [
-#   'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-#   ]
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #   'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    #   ]
 }
 
 
