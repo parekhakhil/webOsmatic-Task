@@ -10,7 +10,7 @@ class Contact(models.Model):
     url = models.URLField(null=True, blank=True)
     country_code = models.CharField(max_length=5)
     email = models.EmailField(max_length=128, null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='contacts')
 
     def __str__(self):
         return f"{self.name} -- {self.mobile}"

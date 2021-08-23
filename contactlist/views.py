@@ -1,6 +1,4 @@
-from zipapp import create_archive
-from django.shortcuts import render
-from .serializers import ContactSerializer
+from .serializers import AllContactSerializer,ContactSerializer
 from .models import Contact
 from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
@@ -11,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework import status as httpStatus
-
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -24,6 +22,7 @@ class ContactCreateView(GenericAPIView):
         if not request.POST._mutable:
             request.POST._mutable
         data = request.data
+        data['user'] = request._user
         serializer = ContactSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -50,10 +49,10 @@ class ContactDetailView(RetrieveUpdateDestroyAPIView):
 
 
 class ContactListView(ListAPIView):
-    serializer_class = ContactSerializer
+    serializer_class = AllContactSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [SessionAuthentication]
 
     def get_queryset(self):
-        qs = Contact.objects.filter(user__id=self.request.user.id)
+        qs = User.objects.filter(id=self.request.user.id)
         return qs

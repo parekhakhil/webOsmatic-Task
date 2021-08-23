@@ -5,10 +5,10 @@ from authapp.serializers import UserSerializer
 
 
 class ContactSerializer(serializers.ModelSerializer):
-    user_id = serializers.PrimaryKeyRelatedField(
-        write_only=True, source="user", queryset=User.objects.all()
-    )
-    user = UserSerializer(read_only=True)
+    # user_id = serializers.PrimaryKeyRelatedField(
+    #     write_only=True, source="user", queryset=User.objects.all()
+    # )
+    # user = UserSerializer(read_only=True)
 
     class Meta:
         model = Contact
@@ -18,7 +18,13 @@ class ContactSerializer(serializers.ModelSerializer):
             "name",
             "email",
             "country_code",
-            "user_id",
+            # "user_id",
             "user",
             "url",
         ]
+
+class AllContactSerializer(serializers.ModelSerializer):
+    contacts = ContactSerializer(many=True,read_only=True)
+    class Meta:
+        model = User
+        fields = ['id','email','username','contacts']
