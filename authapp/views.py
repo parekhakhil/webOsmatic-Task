@@ -1,9 +1,10 @@
-from .serializers import UserProfileSerializer, UserSerializer
+from .serializers import LoginSerializer, UserProfileSerializer, UserSerializer
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework.generics import (
     CreateAPIView,
     RetrieveUpdateDestroyAPIView,
+    GenericAPIView
 )
 from rest_framework.views import APIView
 from rest_framework import status as httpStatus
@@ -11,15 +12,16 @@ from rest_framework.response import Response
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import authentication
-
+from rest_framework.parsers import FormParser,MultiPartParser
 # Create your views here.
 
 from .models import UserProfile
 
 
-class LoginView(APIView):
+class LoginView(GenericAPIView):
     authentication_classes = [authentication.SessionAuthentication]
-
+    # parser_classes = [FormParser,MultiPartParser]
+    serializer_class = LoginSerializer
     def post(self, request, *args, **kwargs):
         data = request.data
         username = data.get("username")
